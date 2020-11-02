@@ -30,7 +30,10 @@ const questions = [
         default: "example@employee.com",
     },
     {
-        
+        type: "input",
+        name: "school",
+        message: "What is the intern's school?",
+        default: "UPenn",
     }
 ]
 
