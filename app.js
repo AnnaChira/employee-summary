@@ -34,7 +34,19 @@ const questions = [
         name: "school",
         message: "What is the intern's school?",
         default: "UPenn",
-    }
+    },
+    {
+        type: "input",
+        name: "phone",
+        message: "What is the manager's number?",
+        default: "205-555-1234",
+    },
+    {
+        type: "input",
+        name: "role",
+        message: "What is the employee's role?",
+        default: "Engineer",
+    },
 ]
 
 // Write code to use inquirer to gather information about the development team members,
