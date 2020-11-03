@@ -76,40 +76,40 @@ const employeetype = [
     },
 ]
 
-function init(){
+function init() {
     let role;
     let employee;
     return inquirer.prompt(employeetype)
-    .then(function(answers){
-        role = answers.type;
-        if (answers.type === "Intern"){
-            return inquirer.prompt(internQuestions)
-        } else if (answers.type === "Manager"){
-            return inquirer.prompt(managerQuestions)
-        } else if (answers.type === "Engineer"){
-            return inquirer.prompt(engineerQuestions)
-        }
-        
-    })
-    .then(function(answers){
-        if (role === "Intern"){
-           employee = new Intern();
-        } else if (role === "Manager"){
-            employee = new Manager();
-        } else if (role === "Engineer"){
-            employee = new Engineer();
-        }
-        employees.push(employee)
-        return inquirer.prompt(prompt)
-    })
-    .then(function(answers){
-        if (answers.confirm){
-            return init()
-        } else{
-            render(employees)
-            fs.writeFileSync(__dirname + "/output/main.html", markdown, "utf8");
-        }
-    })
+        .then(function (answers) {
+            role = answers.type;
+            if (answers.type === "Intern") {
+                return inquirer.prompt(internQuestions)
+            } else if (answers.type === "Manager") {
+                return inquirer.prompt(managerQuestions)
+            } else if (answers.type === "Engineer") {
+                return inquirer.prompt(engineerQuestions)
+            }
+
+        })
+        .then(function (answers) {
+            if (role === "Intern") {
+                employee = new Intern();
+            } else if (role === "Manager") {
+                employee = new Manager();
+            } else if (role === "Engineer") {
+                employee = new Engineer();
+            }
+            employees.push(employee)
+            return inquirer.prompt(prompt)
+        })
+        .then(function (answers) {
+            if (answers.confirm) {
+                return init()
+            } else {
+                render(employees)
+                fs.writeFileSync(__dirname + "/output/team.html", markdown, "utf8");
+            }
+        })
 }
 init()
 // Write code to use inquirer to gather information about the development team members,
