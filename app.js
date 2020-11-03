@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const employees = []
+
 const questions = [
     {
         type: "input",
@@ -29,26 +31,87 @@ const questions = [
         message: "What is the employee's email?",
         default: "example@employee.com",
     },
+]
+
+const internQuestions = [
     {
         type: "input",
         name: "school",
         message: "What is the intern's school?",
         default: "UPenn",
     },
+].concat(questions);
+
+const engineerQuestions = [
     {
         type: "input",
-        name: "phone",
+        name: "github",
+        message: "What is the engineer's github username?",
+        default: "examplegithbu",
+    },
+].concat(questions);
+
+const managerQuestions = [
+    {
+        type: "input",
+        name: "officeNumber",
         message: "What is the manager's number?",
         default: "205-555-1234",
     },
+].concat(questions);
+
+const prompt = [
     {
-        type: "input",
-        name: "role",
-        message: "What is the employee's role?",
-        default: "Engineer",
+        type: "confirm",
+        name: "confirm",
+        message: "Would you like to add another employee?",
+    },
+]
+const employeetype = [
+    {
+        type: "list",
+        name: "type",
+        message: "What role is the employee?",
+        choices: ["Engineer", "Manager", "Intern"],
     },
 ]
 
+function init(){
+    let role;
+    let employee;
+    return inquirer.prompt(employeetype)
+    .then(function(answers){
+        role = answers.type;
+        if (answers.type === "Intern"){
+            return inquirer.prompt(internQuestions)
+        } else if (answers.type === "Manager"){
+            return inquirer.prompt(managerQuestions)
+        } else if (answers.type === "Engineer"){
+            return inquirer.prompt(engineerQuestions)
+        }
+        
+    })
+    .then(function(answers){
+        if (role === "Intern"){
+           employee = new Intern();
+        } else if (role === "Manager"){
+            employee = new Manager();
+        } else if (role === "Engineer"){
+            employee = new Engineer();
+        }
+        employees.push(employee)
+        return inquirer.prompt(prompt)
+    })
+    .then(function(answers){
+        if (answers.confirm){
+            return init()
+        } else{
+            // render(employees)
+            .fs.fsyncSync
+        }
+    })
+}
+init()
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -70,4 +133,4 @@ const questions = [
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+// for the provided `render` function to work! 
