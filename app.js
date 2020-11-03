@@ -106,8 +106,8 @@ function init(){
         if (answers.confirm){
             return init()
         } else{
-            // render(employees)
-            .fs.fsyncSync
+            render(employees)
+            fs.writeFileSync(__dirname + "/output/main.html", markdown, "utf8");
         }
     })
 }
