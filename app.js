@@ -93,11 +93,11 @@ function init() {
         })
         .then(function (answers) {
             if (role === "Intern") {
-                employee = new Intern();
+                employee = new Intern(answers.name, answers.id, answers.email, answers.school);
             } else if (role === "Manager") {
-                employee = new Manager();
+                employee = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
             } else if (role === "Engineer") {
-                employee = new Engineer();
+                employee = new Engineer(answers.name, answers.id, answers.email, answers.github);
             }
             employees.push(employee)
             return inquirer.prompt(prompt)
@@ -106,8 +106,7 @@ function init() {
             if (answers.confirm) {
                 return init()
             } else {
-                render(employees)
-                fs.writeFileSync(__dirname + "/output/team.html", markdown, "utf8");
+                fs.writeFileSync(__dirname + "/output/team.html", render(employees), "utf8");
             }
         })
 }
